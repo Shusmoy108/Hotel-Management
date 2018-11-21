@@ -1,0 +1,181 @@
+
+<div class="panel panel-default">
+            <ul class="panel-heading, nav nav-tabs" >
+
+                <li class="active"><a href="#hotel" data-toggle="tab">
+                  Search Hotels
+                </a></li>
+                <li><a href="#room" data-toggle="tab">
+                   Search Room
+                </a></li>
+            </ul>
+            <div class="panel-body, tab-content">
+                <div class="tab-pane fade in active" id="hotel">
+                    <div class="container">
+                        <div class="row">
+                            <form role="form" ng-submit="hotelSearch()" action="/hotelcom/search/hotel/" method="get" enctype="multipart/form-data" id="hotelSearch">
+                                {% csrf_token %}
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="hotel_name" placeholder="Hotel Name">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="city" placeholder="City">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Others facilities:</label>
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" value="" id="pool"> Pool</label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" value="" id="breakfast">Breakfast</label>
+                                        </div>
+                                        <div class="checkbox disabled">
+                                            <label><input type="checkbox" value="" id="wifi">  Wifi  </label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" value="" id="cafe">Cafes and restaurants</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                <div class="form-group">
+                                    {% comment %}@declare id="star"{% endcomment %}
+
+                                    <label for="star">Star:</label>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control" id="min_star" placeholder=" From ">
+                                        </div>
+                                        <div  class="col-md-3">
+                                            <input type="text" class="form-control" id="max_star" placeholder="To ">
+                                        </div>
+                                    </div>
+                                    <hr/>
+                                    <label for="star">User rating:</label>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control" id="min_point" placeholder=" From ">
+                                        </div>
+                                        <div  class="col-md-3">
+                                            <input type="text" class="form-control" id="max_point" placeholder=" To ">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-9"></div>
+                            <div class="col-md-1">
+                                <button type="submit" form="hotelSearch" class="btn btn-default">Search</button>
+                            </div>
+{#                            <div class="col-md-1">#}
+{#                                <button type="submit" class="btn btn-default">All hotels</button>#}
+{#                            </div>#}
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="room">
+                    <div class="container">
+                        <div class="row">
+                            <form ng-submit="roomSearch()" action="/hotelcom/search/room" method="post" enctype="multipart/form-data" id="roomSearch">
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                            <input type="text" class="form-control" id="room_hotel" placeholder="Hotel Name">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="room_city" placeholder="City">
+                                    </div>
+                                    <hr/>
+                                    <div class="form-group" class="col-md-1">
+                                        <label for="star">Star:</label>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <input type="text" class="form-control" id="room_min_star" placeholder=" From ">
+                                            </div>
+                                            <div  class="col-md-3">
+                                                <input type="text" class="form-control" id="room_max_star" placeholder="To ">
+                                            </div>
+                                        </div>
+                                        <hr/>
+                                        <label for="star">User rating:</label>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <input type="text" class="form-control" id="room_min_point" placeholder=" From ">
+                                            </div>
+                                            <div  class="col-md-3">
+                                                <input type="text" class="form-control" id="room_max_point" placeholder=" To ">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Others facilities:</label>
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" value="" id="room_pool"> Pool</label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" value="" id="room_breakfast">Breakfast</label>
+                                        </div>
+                                        <div class="checkbox disabled">
+                                            <label><input type="checkbox" value="" id="room_wifi">  Wifi  </label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" value="" id="room_cafe">Cafes and restaurants</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="capacity" placeholder="Minimum room capacity: person">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="cost" placeholder=" Maximum room price: Taka">
+                                    </div>
+
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Others facilities Room:</label>
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" value="" id="tv"> TV</label>
+                                        </div>
+
+                                        <div class="checkbox disabled">
+                                            <label><input type="checkbox" value="" id="lake"> Lake  </label>
+                                        </div>
+                                        <div class="checkbox disabled">
+                                            <label><input type="checkbox" value="" id="kitchen">kitchen</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-9"></div>
+                                    <div class="col-md-1">
+                                        <button type="submit" class="btn btn-default">Search</button>
+                                    </div>
+                                    {#                                <div class="col-md-1">#}
+                                    {#                                    <button class="btn btn-default">View all rooms</button>#}
+                                    {#                                </div>#}
+                                </div>
+                            </form>
+
+                         </div>
+                        <hr>
+                    </div>
+                </div>
+
+            </div>
+        </div>

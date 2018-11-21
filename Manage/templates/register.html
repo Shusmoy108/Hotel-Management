@@ -1,0 +1,23 @@
+{% extends "hotelcom/base.html" %}
+{% load staticfiles %}
+
+{% block css %}
+    {{ block.super }}
+{% endblock %}
+
+{% block body %}
+<div class="col-md-2"></div>
+<div class="col-md-8">
+<div class="panel panel-default ">
+            <div class="panel-heading" >
+                Register
+            </div>
+            <div class="panel-body">
+
+                    {% include 'form.html' with form=form value="Register"%}
+            </div>
+
+</div>
+</div>
+<div class="col-md-2"></div>
+{% endblock %}

@@ -1,0 +1,22 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Management
+    </div>
+    <div class="panel-body list">
+        <a href= {% url 'profile' %} {% if active == 'profile' %} class="active" {% endif %}>
+           My profile
+        </a>
+        <a href={% url 'hotels_list' %} {% if active == 'hotels_list' %} class="active" {% endif %}>
+Hotels list
+        </a>
+        <a href={% url 'add_hotel' %} {% if active == 'add_hotel' %} class="active" {% endif %}>
+Add Hotel
+        </a>
+        <a href={% url 'commision' %} {% if active == 'commision' %} class="active" {% endif %}>
+Commision
+        </a>
+        <a href={% url 'report' %} {% if active == 'report' %} class="active" {% endif %}>
+Report
+        </a>
+    </div>
+</div>

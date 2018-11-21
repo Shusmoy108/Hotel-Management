@@ -1,0 +1,315 @@
+{% extends "base.html" %}
+{% block css %}
+    {{ block.super }}
+    <style>
+        body {
+            background="background.jpg"
+            background: url("/media/background.jpg") fixed !important;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+     <link rel="stylesheet" type="text/css" href="backgrnd.css">
+<! <img src="home.jpg" height="500" width="500"> >
+    <div ng-app="" ng-controller="HomeSearch" ng-init="init()" >
+
+        <div class="panel panel-default">
+            <ul class="panel-heading, nav nav-tabs" >
+
+                <li class="active"><a href="#hotel" data-toggle="tab">
+                   Search Hotels
+                </a></li>
+                <li><a href="#room" data-toggle="tab">
+                   Search Room
+                </a></li>
+            </ul>
+            <div class="panel-body, tab-content">
+                <div class="tab-pane fade in active" id="hotel">
+                    <div class="container">
+                        <div class="row">
+                            <form role="form" ng-submit="hotelSearch()"  id="hotelSearch">
+                                {% csrf_token %}
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="hotel_name" placeholder="Hotel Name">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="city" placeholder="City">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Others facilities:</label>
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" value="" ng-model="pool"> Pools</label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" value="" ng-model="breakfast">Breakfast</label>
+                                        </div>
+                                        <div class="checkbox disabled">
+                                            <label><input type="checkbox" value="" ng-model="wifi">  Wifi  </label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" value="" ng-model="cafe">Cafes and restaurants</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        {% comment %}@declare ng-model="star"{% endcomment %}
+
+                                        <label for="star">Star:</label>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <input type="number" class="form-control" ng-model="min_star" placeholder=" From ">
+                                            </div>
+                                            <div  class="col-md-4">
+                                                <input type="number" class="form-control" ng-model="max_star" placeholder=" To ">
+                                            </div>
+                                        </div>
+                                        <hr/>
+                                        <label for="star">User rating:</label>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <input type="number" class="form-control" ng-model="min_point" placeholder=" From ">
+                                            </div>
+                                            <div  class="col-md-4">
+                                                <input type="number" class="form-control" ng-model="max_point" placeholder=" To ">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-md-5"></div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="hotel_sort"> Sort by: </label>
+                                            <select class="form-control"  id="hotel_sort" >
+                                                <option selected="1" value="1">
+                                                    Star
+                                                </option>
+                                                <option value="2">
+                                                   Rate
+                                                </option>
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-1">
+                                        </br>
+                                        <input type="submit" value=" Search " class="btn btn-primary">
+                                    </div>
+                                    <div class="col-md-1">
+                                        </br>
+                                        <button type="button" class="btn btn-primary" ng-click="allHotels()">
+View all hotels
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="room">
+                    <div class="container">
+                        <div class="row">
+                            <form ng-submit="roomSearch()"  id="roomSearch">
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="room_hotel" placeholder="Hotel Name">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" ng-model="room_city" placeholder="City">
+                                    </div>
+                                    <hr/>
+                                    <div class="form-group" class="col-md-1">
+                                        <label for="star">Star:</label>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <input type="number" class="form-control" ng-model="room_min_star" placeholder=" From ">
+                                            </div>
+                                            <div  class="col-md-4">
+                                                <input type="number" class="form-control" ng-model="room_max_star" placeholder="To ">
+                                            </div>
+                                        </div>
+                                        <hr/>
+                                        <label for="star">User rating:</label>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <input type="number" class="form-control" ng-model="room_min_point" placeholder=" From ">
+                                            </div>
+                                            <div  class="col-md-4">
+                                                <input type="number" class="form-control" ng-model="room_max_point" placeholder=" to ">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Others facilities:</label>
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" value="" ng-model="room_pool"> Pool</label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" value="" ng-model="room_breakfast">Breakfast</label>
+                                        </div>
+                                        <div class="checkbox disabled">
+                                            <label><input type="checkbox" value="" ng-model="room_wifi">  Wifi  </label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" value="" ng-model="room_cafe">Cafes and restaurants</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+
+                                    <div class="form-group">
+                                        <input type="number" class="form-control" ng-model="capacity" placeholder="Minimum room capacity: person">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input type="number" class="form-control" ng-model="cost" placeholder="Maximum room price: Taka ">
+                                    </div>
+
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Others facilities Room:</label>
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" value="" ng-model="tv"> TV</label>
+                                        </div>
+
+                                        <div class="checkbox disabled">
+                                            <label><input type="checkbox" value="" ng-model="extra_bed"> cot  </label>
+                                        </div>
+                                        <div class="checkbox disabled">
+                                            <label><input type="checkbox" value="" ng-model="kitchen">kitchen</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-md-2">
+  <br>
+
+                                        <div class="form-group">
+                                            <label for="room_sort"> Sort by: </label>
+                                            <select class="form-control" id="room_sort" >
+                                                <option selected="1" value="1">
+                                                  Star
+                                                </option>
+                                                <option value="2">
+                                                   Score
+                                                </option>
+                                                <option value="3">
+                                                  Cost
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <br>
+                                        <input type="submit" class="btn btn-primary" value=" Search ">
+
+                                    </div>
+                                    <div class="col-md-1">
+                                         <br> <br>
+                                        <button type="button" ng-click="allRooms()" class="btn btn-primary">View all rooms</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <div class="row">
+                    <div class="col-sm-6 col-md-4" ng-repeat="Obj in getCurrentList().obj_list">
+                        <div class="thumbnail" >
+                            <a href=[[Obj.link]]>
+                                <div class="img-wrapper" style="width: 300px" >
+                                    <img ng-src=[[Obj.img_url]]>
+                                </div>
+                            </a>
+                            <div class="caption" style="text-align: center">
+                                    <a href=[[Obj.link]]>
+         <!                                   [[Obj.hotel_name | limitTo:22 ]] >
+                                    </a>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-1"></div>
+                                <div class="col-md-5">
+                                    <p style="float: right">  Star: </p>
+                                </div>
+                                <div class="col-md-5">
+                                    <div ng-repeat="i in renge">
+                                        <span  ng-if=" i<=Obj.star" class="glyphicon glyphicon-star" style="float: left"></span>
+                                        <span ng-if=" i>Obj.star" class="glyphicon glyphicon-star-empty" style="float: left"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-1"></div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-1"></div>
+                                <div class="col-md-5">
+                                    <p style="float: right"> Score </p>
+                                </div>
+                                <div class="col-md-1">
+                                    <div ng-repeat="i in renge">
+                                        <span  ng-if=" i<=Obj.point" class="glyphicon glyphicon-star" style="float: left"></span>
+                                        <span ng-if=" i>Obj.point" class="glyphicon glyphicon-star-empty" style="float: left"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-1"></div>
+                            </div>
+                            <div ng-if="mode == 2" class="row">
+                                <div class="col-md-1"></div>
+                                <div style="text-align: right" class="col-md-5"> Price per night: </div>
+                                <div style="text-align: left" class="col-md-5">
+  <!                                  [[Obj.price]] >
+                                    <label>
+                                        Taka
+                                    </label>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                <br>
+                </div>
+                <div class="row" style="text-align: center">
+
+                    <ul class="pagination">
+                    <li ng-repeat="page in pages" ng-class="{'active': getActive(page)}">
+                        <a href="#" ng-click="changePage(page.pageNum)">
+     <!                      [[page.pageNum]] >
+                        </a>
+                    </li>
+                </ul>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

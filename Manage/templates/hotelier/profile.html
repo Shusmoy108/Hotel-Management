@@ -1,0 +1,40 @@
+{% extends "secondBase.html" %}
+{% load bootstrap3 %}
+{% load staticfiles %}
+
+{% block menu %}
+    {% include 'hotelier/menu.html' with active='profile'%}
+{% endblock %}
+
+{% block content %}
+    <div class="col-md-7">
+        <div class="panel  panel-default">
+            <div class="panel-heading">
+                My profile
+            </div>
+            <div class="panel-body">
+{#                {{ hotelier.description }}#}
+
+                <strong>Name:</strong> {{ hotelier.first_name }}
+                <hr/>
+                <strong>Last name:</strong> {{ hotelier.last_name }}
+                <hr/>
+                <strong>Sex:</strong>
+                {% if passenger.gender == "man" %}
+                    Male
+                {% else %}
+                    Female
+                {% endif %}
+                <hr/>
+                <strong>Contact number :</strong> {{ hotelier.first_phone }}
+                <hr/>
+                <strong>Another contact number:</strong> {{ hotelier.second_phone }}
+                <hr/>
+                <strong>  Land number:</strong> {{ hotelier.cell_phone }}
+                <hr/>
+                <a href="/hotelcom/profile/edit/" class="btn btn-primary">Change View</a>
+                <a href="/hotelcom/changepassword/" class="btn btn-primary">Change Password</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

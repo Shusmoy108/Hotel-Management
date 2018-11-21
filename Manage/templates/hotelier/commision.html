@@ -1,0 +1,64 @@
+{% extends "secondBase.html" %}
+{% load bootstrap3 %}
+{% load staticfiles %}
+
+{% block menu %}
+    {% include 'hotelier/menu.html' with active='commision'%}
+{% endblock %}
+
+{% block content %}
+    <div class="col-md-7">
+        <div class="panel  panel-default">
+            <div class="panel-heading">
+                All fees
+            </div>
+            <div class="panel-body">
+                <label>Report charges</label>
+                <table class="table">
+                    <thead>
+                        <th>Start date</th>
+                        <th>Check Out date</th>
+                        <th>Total fees</th>
+                        <th>Payment status</th>
+                    </thead>
+                    <tbody>
+                        {% for commision in commisions %}
+                            <tr>
+                                <th>{{ commision.start_date }}</th>
+                                {% if commision.status == 0 %}
+                                    <th>Today</th>
+                                {% else %}
+                                    <th>{{ commision.end_date }}</th>
+                                {% endif %}
+                                <th>{{ commision.total }}</th>
+                                {% if commision.status %}
+                                    <th>Paid</th>
+                                {% else %}
+                                    <th>Unpaid</th>
+                                {% endif %}
+
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <hr/>
+                <div class="container">
+                    {% if last_commision == None %}
+                        <label>Sorry, no commision.</label>
+                    {% else %}
+                        <div class="row">
+                            <strong> Dear hotelier </strong>
+                            {{ last_commision.hotelier.first_name }} {{ last_commision.hotelier.last_name }}
+                        </div>
+                        <div class="row">
+                            <strong>The amount you charge this month is:</strong>
+                            {{ last_commision.total }}
+                        </div>
+                    {% endif %}
+                </div>
+                <hr/>
+                <a href = "/hotelcom/bank/0/{{ last_commision.id }}/"class="btn btn-primary" >the payment</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

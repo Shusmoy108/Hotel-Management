@@ -1,0 +1,16 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Management
+    </div>
+    <div class="panel-body list">
+        <a href = {% url 'profile' %} {% if active == 'profile' %} class="active" {% endif %}>
+My profile
+        </a>
+        <a href = {% url 'my_reservation' %} {% if active == 'reservation' %} class="active" {% endif %}>
+Booking list
+        </a>
+        <a href = {% url 'my_comments' %} {% if active == 'comments' %} class="active" {% endif %}>
+            Member Comments
+        </a>
+    </div>
+</div>
